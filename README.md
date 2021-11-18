@@ -14,7 +14,7 @@ If user is correctly connected to one or more computer it will launch a VNC conn
 3) Add a script in your pc and add a node inside regedit
 
 
-1) write a script (you will find inside resources) like this
+1) write a script (you will find inside resources) like this (let's assume in c:\startVNC.bat)
 > SET S=%1
 > 
 > SET S=%S:~7,-2%
@@ -23,4 +23,21 @@ If user is correctly connected to one or more computer it will launch a VNC conn
 > 
 > quit 0
 
+2) Open regedit and add
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\vnc]
+@="URL:vnc Protocol"
+"URL Protocol"=""
+
+[HKEY_CLASSES_ROOT\vnc\shell]
+
+[HKEY_CLASSES_ROOT\vnc\shell\open]
+
+[HKEY_CLASSES_ROOT\vnc\shell\open\command]
+@="\"c:\\startVNC.bat\" \"%1\""
+3) Download and install the plugin as usual
+
+
+TODO: a lot of documentation
 
