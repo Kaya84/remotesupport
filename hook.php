@@ -47,7 +47,7 @@ function plugin_remotesupport_postinit() {
 		$url = "";
 	
 		while ($row2 = $req2->next()){
-			$url .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row2['name'] ."'\"><i class=\"fa fa-laptop-medical\"></i>" . $row2['name'] . "</li>";
+			$url .= "<li class=\"document\" onclick=\"location.href='sccm://" . $row2['name'] ."'\"><i class=\"fa fa-laptop-medical\"></i>" . $row2['name'] . "</li>";
 		}
 	
 		if ($url != ""){
