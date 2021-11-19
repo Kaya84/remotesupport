@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<root>
+    <name>Remote Support</name>
+    <key>remotesupport</key>
+    <state>alpha</state>
+    <logo/>
+    <description>
+        <short>
+            <en>Let you directly connect to a PC throught VNC.</en>
+        </short>
+        <long>
+            <en>The plugin add a button inside ticket detail, by clicking it will open a vnc connection to the pc. Event inside computer detail page</en>
+        </long>
+    </description>
+    <homepage>https://github.com/Kaya84/RemoteSupport</homepage>
+    <download>https://github.com/Kaya84/RemoteSupport/releases</download>
+    <issues>https://github.com/Kaya84/RemoteSupport/issues</issues>
+    <readme>https://github.com/Kaya84/RemoteSupport/blob/master/README.md</readme>
+    <authors>
+        <author>Alessandro Carloni</author>
+    </authors>
+    <versions>
+        <version>
+            <num>0.0.1</num>
+            <compatibility>~9.5.0</compatibility>
+        </version>
+    </versions>
+    <langs>
+        <lang>en_GB</lang>
+        <lang>en_US</lang>
+        <lang>it_IT</lang>
+    </langs>
+    <license>GPLv2+</license>
+    <tags>
+        <en>
+            <tag>VNC</tag>
+            <tag>RDP</tag>
+        </en>
+    </tags>
+    <screenshots>
+        <screenshot>https://user-images.githubusercontent.com/35736369/142444042-0cd5627b-5a5d-4586-8022-083e51d6f06c.png</screenshot>
+    </screenshots>
+</root>
