@@ -43,18 +43,19 @@ function plugin_remotesupport_postinit() {
 		$requester = $row['users_id'];
 		// select  id, name, users_id from glpi_computers where users_id = 178;
 		
-		$req2 = $DB->request(['FROM' => 'glpi_computers', 'WHERE' => ['users_id' => $requester]]);
-		$url = "";
-	
-		while ($row2 = $req2->next()){
-			$url .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row2['name'] ."'\"><i class=\"fa fa-laptop-medical\"></i>" . $row2['name'] . "</li>";
-		}
-	
-		if ($url != ""){
-			echo "<div><ul class=\"timeline_choices\"><h2>Remote support : </h2>";
-			echo $url;
-			echo "</ul></div>";
-		}
+		if ($row['users_id'] != 0) {
+                        $req2 = $DB->request(['FROM' => 'glpi_computers', 'WHERE' => ['users_id' => $requester]]);
+                        $url = "";
+
+                        while ($row2 = $req2->next()){
+                                $url .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row2['name'] ."'\"$                        }
+
+                        if ($url != ""){
+                                echo "<div><ul class=\"timeline_choices\"><h2>Remote support : </h2>";
+                                echo $url;
+                                echo "</ul></div>";
+                        }
+                }
 	}
 }
 ?>
