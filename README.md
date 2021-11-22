@@ -25,7 +25,7 @@ If user is correctly connected to one or more computer it will launch a VNC conn
 
 2) Open regedit and add
 Windows Registry Editor Version 5.00
-
+```
 > [HKEY_CLASSES_ROOT\vnc]
 > @="URL:vnc Protocol"
 > "URL Protocol"=""
@@ -36,7 +36,7 @@ Windows Registry Editor Version 5.00
 > 
 > [HKEY_CLASSES_ROOT\vnc\shell\open\command]
 > @="\"c:\\startVNC.bat\" \"%1\""
-
+```
 3) Download and install the plugin as usual
 
 
