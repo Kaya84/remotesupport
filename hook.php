@@ -44,7 +44,7 @@ function plugin_remotesupport_postinit() {
 		// select  id, name, users_id from glpi_computers where users_id = 178;
 		
 		if ($row['users_id'] != 0) {
-                        $req2 = $DB->request(['FROM' => 'glpi_computers', 'WHERE' => ['users_id' => $requester]]);
+                        $req2 = $DB->request(['FROM' => 'glpi_computers', 'WHERE' => ['users_id' => $requester, 'is_deleted' => 0]]);
                         $url = "";
 
                         while ($row2 = $req2->next()){
