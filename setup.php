@@ -43,6 +43,7 @@ function plugin_init_remotesupport()
 		$PLUGIN_HOOKS['config_page']['remotesupport'] = 'front/index.php';
 		$PLUGIN_HOOKS['menu']['remotesupport']                     = true;
 		$PLUGIN_HOOKS['post_init']['remotesupport'] =   'plugin_remotesupport_postinit';
+		$PLUGIN_HOOKS['pre_item_form']['remotesupport'] =   'plugin_remotesupport_preitem';
 
 	  
    }
