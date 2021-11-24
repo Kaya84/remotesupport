@@ -21,94 +21,67 @@
  --------------------------------------------------------------------------
 */
 
-function plugin_remotesupport_install()
-{
-    return true;
+function plugin_remotesupport_install(){
+	return true;
 }
 
-function plugin_remotesupport_uninstall()
-{
-    return true;
+function plugin_remotesupport_uninstall(){
+	return true;
 }
 
-function plugin_remotesupport_postinit()
-{
-    global $CFG_GLPI, $DB;
+function plugin_remotesupport_postinit() {
+   global $CFG_GLPI, $DB;
 
-    //show this if u are inside ticket detail page
-    if (
-        isset($_GET["id"]) &&
-        $_GET["id"] != 0 &&
-        isset($_GET["_itemtype"]) &&
-        $_GET["_itemtype"] == "Ticket"
-    ) {
-        $id = $_GET["id"];
-
-        //mysql> select * from glpi_tickets_users where tickets_id = 2 and type = 1;
-
-        $req = $DB->request([
-            "FROM" => "glpi_tickets_users",
-            "WHERE" => ["tickets_id" => $id, "type" => 1],
-        ]);
-        //NB: Estraggo unicamente il primo richiedente
-        $row = $req->next();
-        $requester = $row["users_id"];
-        // select  id, name, users_id from glpi_computers where users_id = 178;
-
-        if ($row["users_id"] != 0) {
-            $req2 = $DB->request([
-                "FROM" => "glpi_computers",
-                "WHERE" => ["users_id" => $requester, "is_deleted" => 0],
-            ]);
+	//show this if u are inside ticket detail page
+	if(isset($_GET['id']) && $_GET['id'] != 0 && isset($_GET['_itemtype']) && $_GET['_itemtype'] == "Ticket"){
+		$id  = $_GET['id'];
+		
+		//mysql> select * from glpi_tickets_users where tickets_id = 2 and type = 1;
+	
+		$req = $DB->request(['FROM' => 'glpi_tickets_users', 'WHERE' => ['tickets_id' => $id, 'type' => 1]]);
+		//NB: Estraggo unicamente il primo richiedente
+		$row = $req->next();
+		$requester = $row['users_id'];
+		// select  id, name, users_id from glpi_computers where users_id = 178;
+		
+		if ($row['users_id'] != 0) {
+            $req2 = $DB->request(['FROM' => 'glpi_computers', 'WHERE' => ['users_id' => $requester, 'is_deleted' => 0]]);
             $url = "";
 
-            while ($row2 = $req2->next()) {
-                if ($row2["name"] !== "") {
-                    $url .=
-                        "<li class=\"document\" onclick=\"location.href='vnc://" .
-                        $row2["name"] .
-                        "'\"><i class=\"fa fa-laptop-medical\"></i>" .
-                        $row2["name"] .
-                        "</li>";
-                }
-            }
-            if ($url != "") {
-                echo "<div><ul class=\"timeline_choices\"><h2>Remote support : </h2>";
-                echo $url;
-                echo "</ul></div>";
-            }
+            while ($row2 = $req2->next()){
+				if ($row2['name'] !== "")
+					$url .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row2['name'] ."'\"><i class=\"fa fa-laptop-medical\"></i>" . $row2['name'] . "</li>";
+				
+			}
+				if ($url != ""){
+					echo "<div><ul class=\"timeline_choices\"><h2>Remote support : </h2>";
+					echo $url;
+					echo "</ul></div>";
+				}
         }
-    }
-    //show this only if inside computer detail page
-    if (
-        isset($_GET["id"]) &&
-        $_GET["id"] != 0 &&
-        strpos($_SERVER["REQUEST_URI"], "computer.form")
-    ) {
-        $id = $_GET["id"];
-        //search for the pc
-        $req = $DB->request([
-            "FROM" => "glpi_computers",
-            "WHERE" => ["id" => $id],
-        ]);
+	}
+}
 
-        while ($row = $req->next()) {
-            //check if computer has a name.
-            if ($row["name"] !== "") {
-                $url .=
-                    "<li class=\"document\" onclick=\"location.href='vnc://" .
-                    $row["name"] .
-                    "'\"><i class=\"fa fa-laptop-medical\"></i>" .
-                    $row["name"] .
-                    "</li>";
-            }
-        }
+function plugin_remotesupport_preitem() {
+   global $CFG_GLPI, $DB;
+	//show this only if inside computer detail page
+	if(isset($_GET['id']) && $_GET['id'] != 0 && strpos($_SERVER['REQUEST_URI'], "computer.form")){
+		$id  = $_GET['id'];
+		//search for the pc
+		$req = $DB->request(['FROM' => 'glpi_computers', 'WHERE' => ['id' => $id]]);
 
-        if ($url != "") {
+        while ($row = $req->next()){
+			//check if computer has a name. 
+			if ($row['name'] !== "")
+				$url .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row['name'] ."'\"><i class=\"fa fa-laptop-medical\"></i>" . $row['name'] . "</li>";
+		}
+
+        if ($url != ""){
             echo "<div><ul class=\"timeline_choices\"><h2>Remote support : </h2>";
             echo $url;
             echo "</ul></div>";
         }
-    }
+    
+	}
 }
 ?>
