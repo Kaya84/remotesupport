@@ -59,28 +59,7 @@ class PluginRemotesupportConfig extends CommonDBTM
       echo '</table>';
       echo '</div>';
       Html::closeForm();
-	  
-	  
-	  
-/*
-      Dropdown::showFromArray('barcode_formats', [
-         'code_128_reader'    => 'Code 128',
-         'ean_reader'         => 'EAN',
-         'ean_8_reader'       => 'EAN 8',
-         'code_39_reader'     => 'Code 39',
-         'code_39_vin_reader' => 'Code 39 VIN',
-         'codabar_reader'     => 'Codabar',
-         'upc_reader'         => 'UPC',
-         'upc_e_reader'       => 'UPC E',
-         'i2of5_reader'       => 'Interleaved 2 of 5',
-         '2of5_reader'        => '2 of 5',
-         'code_93_reader'     => 'Code 93',
-      ], [
-         'multiple'  => true,
-         'values'    => isset($config['barcode_formats']) ? importArrayFromDB($config['barcode_formats']) : ['code_39_reader'],
-         'size'      => 3
-      ]);*/
-
+	  	  
    }
 
    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
