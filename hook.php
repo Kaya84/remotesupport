@@ -31,55 +31,98 @@ function plugin_remotesupport_uninstall(){
 
 function plugin_remotesupport_postinit() {
    global $CFG_GLPI, $DB;
-
 	//show this if u are inside ticket detail page
 	if(isset($_GET['id']) && $_GET['id'] != 0 && isset($_GET['_itemtype']) && $_GET['_itemtype'] == "Ticket"){
 		$id  = $_GET['id'];
-		
+
 		//mysql> select * from glpi_tickets_users where tickets_id = 2 and type = 1;
-	
 		$req = $DB->request(['FROM' => 'glpi_tickets_users', 'WHERE' => ['tickets_id' => $id, 'type' => 1]]);
 		//NB: Estraggo unicamente il primo richiedente
-		$row = $req->next();
+
+      
+         //TODO: sistemare ma non capisco perchè il next() non funzioni
+		 foreach ($req as $row){
+			 //var_dump($row);
+			 break;
+		 }
+		 
+		
 		$requester = $row['users_id'];
 		// select  id, name, users_id from glpi_computers where users_id = 178;
-		
+	
 		if ($row['users_id'] != 0) {
             $req2 = $DB->request(['FROM' => 'glpi_computers', 'WHERE' => ['users_id' => $requester, 'is_deleted' => 0]]);
             $url = "";
-
-            while ($row2 = $req2->next()){
-				if ($row2['name'] !== "")
-					$url .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row2['name'] ."'\"><i class=\"fa fa-laptop-medical\"></i>" . $row2['name'] . "</li>";
+			$url2= "";
+				foreach ($req2 as $row2){
+				if ($row2['name'] !== ""){
+	
+					$length = 200;
+					$url .= "<li class=\"document\" onclick=\"window.open('https://vnc.comune.pergine.tn.it/vnc.html?path=vnc%2F" . $row2['name'] ."&eeee=". substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length) . "&autoconnect=true&resize=scale&reconnect=true&show_dot=true&password=prgn01!', '_blank')\" ><i class=\"fa fa-laptop-medical\"></i>" . $row2['name'] . "</li>";
+					
+					
+				//echo '<button class="fa fa-laptop-medical" type="button"  form="itil-form" title="Save">
+                     
+                  //   <span class="d-none d-md-block">Save</span>
+                  //</button>';
+					
+					$url2 .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row2['name'] ."'\"><i class=\"fa fa-headphones\"></i>" . $row2['name'] . "</li>";
+				}
+				
 				
 			}
-				if ($url != ""){
-					echo "<div><ul class=\"timeline_choices\"><h2>Remote support : </h2>";
-					echo $url;
-					echo "</ul></div>";
-				}
+			if ($url != ""){
+				echo "<div><ul class=\"timeline_choices\"><h2>Remote support WEB: </h2>";
+				echo $url;
+				echo "</ul></div>";
+				
+			}
+			if ($url2 != ""){
+				echo "<div><ul class=\"timeline_choices\"><h2>Remote support VNC: </h2>";
+				echo $url2;
+				echo "</ul></div>";		
+				
+			}
         }
 	}
 }
 
 function plugin_remotesupport_preitem() {
    global $CFG_GLPI, $DB;
+            $url = "";
+            $url2= "";
+ 
 	//show this only if inside computer detail page
 	if(isset($_GET['id']) && $_GET['id'] != 0 && strpos($_SERVER['REQUEST_URI'], "computer.form")){
 		$id  = $_GET['id'];
 		//search for the pc
 		$req = $DB->request(['FROM' => 'glpi_computers', 'WHERE' => ['id' => $id]]);
-
-        while ($row = $req->next()){
+	foreach ($req as $row){
+        //while ($row = $req->next()){
+			//var_dump($row);
 			//check if computer has a name. 
-			if ($row['name'] !== "")
-				$url .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row['name'] ."'\"><i class=\"fa fa-laptop-medical\"></i>" . $row['name'] . "</li>";
+			if ($row['name'] !== ""){ //echo "ENTRO=?";
+				
+				$length = 200;
+				$url .= "<li class=\"document\" onclick=\"window.open('https://vnc.comune.pergine.tn.it/vnc.html?path=vnc%2F" . $row['name'] ."&eeee=". substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length) . "&autoconnect=true&resize=scale&reconnect=true&show_dot=true&password=prgn01!', '_blank')\" ><i class=\"fa fa-laptop-medical\"></i>" . $row['name'] . "</li>";
+				
+				$url2 .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row['name'] ."'\"><i class=\"fa fa-headphones\"></i>" . $row['name'] . "</li>";
+			
+			}
+				
 		}
 
         if ($url != ""){
-            echo "<div><ul class=\"timeline_choices\"><h2>Remote support : </h2>";
+            echo "<div><ul class=\"timeline_choices\"><h2>Remote support WEB: </h2>";
             echo $url;
-            echo "</ul></div>";
+            echo "</ul></div>";	
+			
+        }
+		if ($url2 != ""){
+            echo "<div><ul class=\"timeline_choices\"><h2>Remote support VNC: </h2>";
+            echo $url2;
+            echo "</ul></div>";		
+			
         }
     
 	}
