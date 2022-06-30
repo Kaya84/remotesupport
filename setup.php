@@ -23,7 +23,7 @@
 
 define('PLUGIN_REMOTESUPPORT_VERSION', '0.0.1');
 define('PLUGIN_REMOTESUPPORT_MIN_GLPI', '9.5.0');
-define('PLUGIN_REMOTESUPPORT_MAX_GLPI', '9.6.0');
+define('PLUGIN_REMOTESUPPORT_MAX_GLPI', '10.1');
 
 function plugin_init_remotesupport()
 {
@@ -31,21 +31,20 @@ function plugin_init_remotesupport()
 	$PLUGIN_HOOKS['csrf_compliant']['remotesupport'] = true;
 
 	if (Plugin::isPluginActive('remotesupport')) {
-		
-		
+
       //$PLUGIN_HOOKS['add_javascript']['remotesupport'][] = 'js/support.js';
       // Add Config Page
       Plugin::registerClass('PluginRemotesupportConfig', ['addtabon' => 'Config']);
 
 
-	  
+
 		$PLUGIN_HOOKS["menu_toadd"]['remotesupport'] = ['tools'  => 'PluginRemotesupportMenu'];
 		$PLUGIN_HOOKS['config_page']['remotesupport'] = 'front/index.php';
 		$PLUGIN_HOOKS['menu']['remotesupport']                     = true;
 		$PLUGIN_HOOKS['post_init']['remotesupport'] =   'plugin_remotesupport_postinit';
 		$PLUGIN_HOOKS['pre_item_form']['remotesupport'] =   'plugin_remotesupport_preitem';
 
-	  
+
    }
 }
 
