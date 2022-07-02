@@ -7,7 +7,7 @@
 
  -------------------------------------------------------------------------
  LICENSE
- This file is part of Camera Input.
+ This file is part of Remote support plugin.
  Camera Input is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -21,6 +21,12 @@
  --------------------------------------------------------------------------
 */
 
+//Variables to be defined
+define("URL", "https://url.to.vnc/"); 
+define("PASSWORD", "VNCPASSWORD");
+
+
+define("FULL_URL", URL . "vnc.html?path=vnc%2F");
 function plugin_remotesupport_install(){
 	return true;
 }
@@ -48,7 +54,6 @@ function plugin_remotesupport_postinit() {
 		 
 		
 		$requester = $row['users_id'];
-		// select  id, name, users_id from glpi_computers where users_id = 178;
 	
 		if ($row['users_id'] != 0) {
             $req2 = $DB->request(['FROM' => 'glpi_computers', 'WHERE' => ['users_id' => $requester, 'is_deleted' => 0]]);
@@ -58,14 +63,8 @@ function plugin_remotesupport_postinit() {
 				if ($row2['name'] !== ""){
 	
 					$length = 200;
-					$url .= "<li class=\"document\" onclick=\"window.open('https://vnc.comune.pergine.tn.it/vnc.html?path=vnc%2F" . $row2['name'] ."&eeee=". substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length) . "&autoconnect=true&resize=scale&reconnect=true&show_dot=true&password=prgn01!', '_blank')\" ><i class=\"fa fa-laptop-medical\"></i>" . $row2['name'] . "</li>";
-					
-					
-				//echo '<button class="fa fa-laptop-medical" type="button"  form="itil-form" title="Save">
-                     
-                  //   <span class="d-none d-md-block">Save</span>
-                  //</button>';
-					
+					$url .= "<li class=\"document\" onclick=\"window.open('" . URL  . $row2['name'] ."&eeee=". substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length) . "&autoconnect=true&resize=scale&reconnect=true&show_dot=true&password=". PASSWORD ."', '_blank')\" ><i class=\"fa fa-laptop-medical\"></i>" . $row2['name'] . "</li>";
+				
 					$url2 .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row2['name'] ."'\"><i class=\"fa fa-headphones\"></i>" . $row2['name'] . "</li>";
 				}
 				
@@ -104,7 +103,7 @@ function plugin_remotesupport_preitem() {
 			if ($row['name'] !== ""){ //echo "ENTRO=?";
 				
 				$length = 200;
-				$url .= "<li class=\"document\" onclick=\"window.open('https://vnc.comune.pergine.tn.it/vnc.html?path=vnc%2F" . $row['name'] ."&eeee=". substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length) . "&autoconnect=true&resize=scale&reconnect=true&show_dot=true&password=prgn01!', '_blank')\" ><i class=\"fa fa-laptop-medical\"></i>" . $row['name'] . "</li>";
+				$url .= "<li class=\"document\" onclick=\"window.open('". URL  . $row['name'] ."&eeee=". substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length) . "&autoconnect=true&resize=scale&reconnect=true&show_dot=true&password=" . PASSWORD . "', '_blank')\" ><i class=\"fa fa-laptop-medical\"></i>" . $row['name'] . "</li>";
 				
 				$url2 .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row['name'] ."'\"><i class=\"fa fa-headphones\"></i>" . $row['name'] . "</li>";
 			
