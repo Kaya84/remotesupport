@@ -50,6 +50,10 @@ function plugin_remotesupport_install(){
 }
 
 function plugin_remotesupport_uninstall(){
+	   if ($DB->tableExists("glpi_plugin_remotesupport")) {
+		$query = "DROP TABLE `glpi_plugin_remotesupport`";
+		$DB->query($query) or die("error deleting glpi_plugin_remotesupport");
+		} 
 	return true;
 }
 
