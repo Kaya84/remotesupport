@@ -10,7 +10,7 @@ If user is correctly connected to one or more computer it will launch a VNC conn
 
 - Prerequisites
 1) VNC Must be installed in the destination PC
-2) PC Name must me correct and resolved inside your DNS Server
+2) PC Name must be correct and resolved inside your DNS Server
 3) Add a script in your pc and add a node inside regedit
 
 
@@ -39,6 +39,9 @@ Windows Registry Editor Version 5.00
 ```
 3) Download and install the plugin as usual
 
+4) Go to config page Tools -> Remote Support
+
+5) Define the params according to your configuration
 
 TODO: a lot of documentation
 
