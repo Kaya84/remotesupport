@@ -21,9 +21,6 @@
  --------------------------------------------------------------------------
 */
 
-//Variables to be defined
-define("URL", "https://url.to.vnc/"); 
-define("PASSWORD", "VNCPASSWORD");
 
 
 define("FULL_URL", URL . "vnc.html?path=vnc%2F");
@@ -54,6 +51,15 @@ function plugin_remotesupport_uninstall(){
 
 function plugin_remotesupport_postinit() {
    global $CFG_GLPI, $DB;
+	//Estraggo i parametri che mi interessano	
+	$res = $DB->request(['FROM' => 'glpi_plugin_remotesupport']);
+
+	foreach ($res as $param){
+		define("URL", $param['url']);
+		define("PASSWORD", $param['password']);
+		break;
+	}
+
 	//show this if u are inside ticket detail page
 	if(isset($_GET['id']) && $_GET['id'] != 0 && isset($_GET['_itemtype']) && $_GET['_itemtype'] == "Ticket"){
 		$id  = $_GET['id'];
@@ -61,14 +67,12 @@ function plugin_remotesupport_postinit() {
 		//mysql> select * from glpi_tickets_users where tickets_id = 2 and type = 1;
 		$req = $DB->request(['FROM' => 'glpi_tickets_users', 'WHERE' => ['tickets_id' => $id, 'type' => 1]]);
 		//NB: Estraggo unicamente il primo richiedente
-
       
-         //TODO: sistemare ma non capisco perchè il next() non funzioni
-		 foreach ($req as $row){
-			 //var_dump($row);
-			 break;
-		 }
-		 
+        //TODO: sistemare ma non capisco perchè il next() non funzioni
+		foreach ($req as $row){
+			//var_dump($row);
+			break;
+		}
 		
 		$requester = $row['users_id'];
 	
@@ -114,8 +118,7 @@ function plugin_remotesupport_preitem() {
 		//search for the pc
 		$req = $DB->request(['FROM' => 'glpi_computers', 'WHERE' => ['id' => $id]]);
 	foreach ($req as $row){
-        //while ($row = $req->next()){
-			//var_dump($row);
+
 			//check if computer has a name. 
 			if ($row['name'] !== ""){ //echo "ENTRO=?";
 				
