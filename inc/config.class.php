@@ -12,77 +12,38 @@ class PluginRemotesupportConfig extends CommonDBTM
       return '';
    }
 
-   public function showForm($ID, $options = [])
-   {      $this->initForm($ID, $options);
 
-      if (!Session::haveRight('config', UPDATE)) {
-         return false;
-      }
-      $config = self::getConfig(true);
+	/**
+	* Summary of showConfigForm
+	*/
+	static function showConfigForm() {
+		global $CFG_GLPI, $DB;
 
-      echo "<form name='form' action=\"". $_SERVER['PHP_SELF']."\" method='post'>";
-      echo "<div class='center' id='tabsbody'>";
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<thead><th colspan='4'>" . __('NoVNC Config', 'remotesupport') . '</th></thead>';
-	  
-      echo "<td><input type='hidden' name='config_class' value='".__CLASS__."'>";
-      echo "<input type='hidden' name='config_context' value='plugin:remotesupport'>";
-      echo __('Attivaz uso NoVNC', 'remotesupport') . '</td>';
-      echo '<td>';
-	        Dropdown::showYesNo('Enable',"0", ['use_checkbox' => true] );
-      echo '</td><td></td><td></tr>';
-	echo "<tr><td>" . _("URL") . " </td>";	
-	echo "<td>";
-	Html::autocompletionTextField($this, 'url', 'xxxx');
-	echo  "</td></tr>";	
+		$res = $DB->request(['FROM' => 'glpi_plugin_remotesupport']);
+		foreach ($res as $r){
+			//$target = Toolbox::getItemTypeFormUrl(__CLASS__);
 
-	/**************************/
-	echo "<thead><th colspan='4'>" . __('Local VNC Config', 'remotesupport') . '</th></thead>';
-	
-      echo '</td></tr>';
-      echo "<tr><td>" . _("Full Client VNC Path") . " </td>";	
-	echo "<td>";
-	Html::autocompletionTextField($this, 'VNCPATH', 'xxxx');
-	echo  "</td></tr>";	
+			echo "<form name='form_remote_config' method='post' action=\"\">";
 
-	  
-	  
-	  echo '</table>';
+			echo "<tr class='tab_bg_1'>";
+			echo "<td >".__("Define url to VNC web ", "remote")."</td><td >";
+			echo Html::input("url", ['value' => $r['url']]);
+			echo "</td></tr>\n";
 
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_2'>";
-	  
-	  
-	  
-      echo "<td colspan='4' class='center'>";
-      echo "<input type='submit' name='update' class='submit' value=\""._sx('button', 'Save'). '">';
-      echo '</td></tr>';
-      echo '</table>';
-      echo '</div>';
-      Html::closeForm();
-	  
-	  
-	  
-/*
-      Dropdown::showFromArray('barcode_formats', [
-         'code_128_reader'    => 'Code 128',
-         'ean_reader'         => 'EAN',
-         'ean_8_reader'       => 'EAN 8',
-         'code_39_reader'     => 'Code 39',
-         'code_39_vin_reader' => 'Code 39 VIN',
-         'codabar_reader'     => 'Codabar',
-         'upc_reader'         => 'UPC',
-         'upc_e_reader'       => 'UPC E',
-         'i2of5_reader'       => 'Interleaved 2 of 5',
-         '2of5_reader'        => '2 of 5',
-         'code_93_reader'     => 'Code 93',
-      ], [
-         'multiple'  => true,
-         'values'    => isset($config['barcode_formats']) ? importArrayFromDB($config['barcode_formats']) : ['code_39_reader'],
-         'size'      => 3
-      ]);*/
+			echo "<tr class='tab_bg_1'>";
+			echo "<td >".__("Define vnc password", "remote")."</td><td >";
+			echo Html::input("password", ['value' => $r['password']]);
 
-   }
+			echo "</td></tr>\n";
+
+			echo "<input type='submit' name='update_fields' value=\"" . _sx('button', 'Save') . "\" class='submit'>";
+
+			Html::closeForm();
+			break;
+		}
+	}
+   
+
 
    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
    {

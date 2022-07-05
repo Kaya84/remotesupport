@@ -1,18 +1,29 @@
 <?php
 global $DB, $CFG_GLPI;
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
-Html::header("Wiki", $_SERVER['PHP_SELF'], 'Tools', 'PluginRemotesupportMenu');
+include ("../../../inc/includes.php");
+Html::header("Remote support", $_SERVER['PHP_SELF'], 'Tools', 'PluginRemotesupportMenu');
 
 
 
 
 $config = new PluginRemotesupportConfig();
 
-		$config->showForm();
+
+if (!empty($_POST)){
+	$DB->update(
+		'glpi_plugin_remotesupport', [
+      'url'      => $_POST['url'],
+      'password'      => $_POST['password']
+   ], [1=>1]
+);
+	
+	
+	
+}
+$config->showConfigForm();
 
 
 
-	Html::footer();
+Html::footer();
 ?>

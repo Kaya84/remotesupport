@@ -28,6 +28,23 @@ define("PASSWORD", "VNCPASSWORD");
 
 define("FULL_URL", URL . "vnc.html?path=vnc%2F");
 function plugin_remotesupport_install(){
+	   global $DB;
+
+	   $config = new Config();
+   if (!$DB->tableExists("glpi_plugin_remotesupport")) {
+      $query = "CREATE TABLE `glpi_plugin_remotesupport` (
+                  `password` varchar(255) default NULL,
+                  `url` varchar(255) NOT NULL
+               ) ENGINE=InnoDB";
+
+      $DB->query($query) or die("error creating glpi_plugin_remotesupport ". $DB->error());
+
+      $query = "INSERT INTO `glpi_plugin_remotesupport`
+                       (`password`, `url`)
+                VALUES ('password', 'https://url.to.vnc')";
+      $DB->query($query) or die("error populate glpi_plugin_remotesupport ". $DB->error());
+   }
+	
 	return true;
 }
 
