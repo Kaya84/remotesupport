@@ -35,6 +35,18 @@ class PluginRemotesupportConfig extends CommonDBTM
 			echo Html::input("password", ['value' => $r['password']]);
 
 			echo "</td></tr>\n";
+			
+			echo "<tr class='tab_bg_1'>";
+			echo "<td >".__("Enable NoVnc web link", "remote")."</td><td > ";
+			Dropdown::showYesNo("enableNoVnc", "1");
+
+			echo "</td></tr>\n";
+			
+			echo "<tr class='tab_bg_1'>";
+			echo "<td >".__("Enable Vnc App link", "remote")."</td><td > ";
+			Dropdown::showYesNo("enableVnc", "1");
+
+			echo "</td></tr>\n";
 
 			echo "<input type='submit' name='update_fields' value=\"" . _sx('button', 'Save') . "\" class='submit'>";
 

@@ -23,7 +23,9 @@
 
 
 
-define("FULL_URL", URL . "vnc.html?path=vnc%2F");
+
+
+
 function plugin_remotesupport_install(){
 	   global $DB;
 
@@ -31,7 +33,9 @@ function plugin_remotesupport_install(){
    if (!$DB->tableExists("glpi_plugin_remotesupport")) {
       $query = "CREATE TABLE `glpi_plugin_remotesupport` (
                   `password` varchar(255) default NULL,
-                  `url` varchar(255) NOT NULL
+                  `url` varchar(255) NOT NULL,
+                  `enableNoVnc` int  NOT NULL,
+                  `enableVnc` int  NOT NULL,
                ) ENGINE=InnoDB";
 
       $DB->query($query) or die("error creating glpi_plugin_remotesupport ". $DB->error());
@@ -57,6 +61,7 @@ function plugin_remotesupport_postinit() {
 	foreach ($res as $param){
 		define("URL", $param['url']);
 		define("PASSWORD", $param['password']);
+		define("FULL_URL", URL . "vnc.html?path=vnc%2F");
 		break;
 	}
 

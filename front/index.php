@@ -13,10 +13,11 @@ $config = new PluginRemotesupportConfig();
 if (!empty($_POST)){
 	$DB->update(
 		'glpi_plugin_remotesupport', [
-      'url'      => $_POST['url'],
-      'password'      => $_POST['password']
-   ], [1=>1]
-);
+			'url'      => $_POST['url'],
+			'password'      => $_POST['password']
+		], 
+		[1=>1]
+	);
 	
 	
 	

@@ -44,7 +44,7 @@ class PluginRemotesupportMenu extends CommonGLPI
 
       global $CFG_GLPI;
 
-      $injectionFormUrl = '/plugins/remotesupport/front/menu.php';
+      $injectionFormUrl = '/plugins/remotesupport/front/index.php';
 
       $menu = [
          'title' => self::getMenuName(),
