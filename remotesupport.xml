@@ -2,7 +2,7 @@
 <root>
     <name>Remote Support</name>
     <key>remotesupport</key>
-    <state>alpha</state>
+    <state>beta</state>
     <logo/>
     <description>
         <short>
@@ -21,8 +21,8 @@
     </authors>
     <versions>
         <version>
-            <num>0.0.1</num>
-            <compatibility>~9.5.0</compatibility>
+            <num>0.0.2</num>
+            <compatibility>10.0.2</compatibility>
         </version>
     </versions>
     <langs>
