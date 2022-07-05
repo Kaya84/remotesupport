@@ -35,7 +35,7 @@ function plugin_remotesupport_install(){
                   `password` varchar(255) default NULL,
                   `url` varchar(255) NOT NULL,
                   `enableNoVnc` int  NOT NULL,
-                  `enableVnc` int  NOT NULL,
+                  `enableVnc` int  NOT NULL
                ) ENGINE=InnoDB";
 
       $DB->query($query) or die("error creating glpi_plugin_remotesupport ". $DB->error());
