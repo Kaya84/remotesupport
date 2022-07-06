@@ -23,7 +23,7 @@ class PluginRemotesupportConfig extends CommonDBTM
 		foreach ($res as $r){
 			//$target = Toolbox::getItemTypeFormUrl(__CLASS__);
 
-			echo "<form name='form_remote_config' method='post' action=\"\">";
+			echo "<table><form name='form_remote_config' method='post' action=\"\">";
 
 			echo "<tr class='tab_bg_1'>";
 			echo "<td >".__("Define url to VNC web ", "remote")."</td><td >";
@@ -38,15 +38,15 @@ class PluginRemotesupportConfig extends CommonDBTM
 			
 			echo "<tr class='tab_bg_1'>";
 			echo "<td >".__("Enable NoVnc web link", "remote")."</td><td > ";
-			Dropdown::showYesNo("enableNoVnc", "1");
+			Dropdown::showYesNo("enableNoVnc", $r['enableNoVnc']);
 
 			echo "</td></tr>\n";
 			
 			echo "<tr class='tab_bg_1'>";
 			echo "<td >".__("Enable Vnc App link", "remote")."</td><td > ";
-			Dropdown::showYesNo("enableVnc", "1");
+			Dropdown::showYesNo("enableVnc", $r['enableVnc']);
 
-			echo "</td></tr>\n";
+			echo "</td></tr>\n</table>";
 
 			echo "<input type='submit' name='update_fields' value=\"" . _sx('button', 'Save') . "\" class='submit'>";
 
