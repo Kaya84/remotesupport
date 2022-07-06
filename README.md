@@ -24,8 +24,9 @@ If user is correctly connected to one or more computer it will launch a VNC conn
 > quit 0
 
 2) Open regedit and add
-Windows Registry Editor Version 5.00
 ```
+Windows Registry Editor Version 5.00
+
 [HKEY_CLASSES_ROOT\vnc]
 @="URL:vnc Protocol"
 "URL Protocol"=""
