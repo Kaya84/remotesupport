@@ -32,13 +32,9 @@ function plugin_init_remotesupport()
 
 	if (Plugin::isPluginActive('remotesupport')) {
 
-      //$PLUGIN_HOOKS['add_javascript']['remotesupport'][] = 'js/support.js';
-      // Add Config Page
-      Plugin::registerClass('PluginRemotesupportConfig', ['addtabon' => 'Config']);
-
-
-
-		$PLUGIN_HOOKS["menu_toadd"]['remotesupport'] = ['tools'  => 'PluginRemotesupportMenu'];
+		//$PLUGIN_HOOKS['add_javascript']['remotesupport'][] = 'js/support.js';
+		// Add Config Page
+  		$PLUGIN_HOOKS["menu_toadd"]['remotesupport'] = ['tools'  => 'PluginRemotesupportMenu'];
 		$PLUGIN_HOOKS['config_page']['remotesupport'] = 'front/index.php';
 		$PLUGIN_HOOKS['menu']['remotesupport']                     = true;
 		$PLUGIN_HOOKS['post_init']['remotesupport'] =   'plugin_remotesupport_postinit';
