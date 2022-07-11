@@ -89,22 +89,44 @@ function plugin_remotesupport_postinit() {
 			$url = "";
 			$url2 = "";
 			
-			
-			foreach ($req2 as $row2) {
-				if ($row2['name'] !== "") {
-
-					$length = 200;
-					if ($enableNoVnc){
-						$url .= "<li class=\"document\" onclick=\"window.open('" . $full_url . $row2['name'] 
-						. "&eeee=" . substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length / strlen($x)))) , 1, $length) 
-						. "&autoconnect=true&resize=scale&reconnect=true&show_dot=true&password=" . $vnc_pasword . "', '_blank')\" >
-						<i class=\"fa fa-laptop-medical\"></i>" . $row2['name'] . "</li>";
-					}
-					if($enableVnc){
-						$url2 .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row2['name'] . "'\"><i class=\"fa fa-headphones\"></i>" . $row2['name'] . "</li>";
+			//check if version > 10. Button layout is different
+			$glpiversion = $CFG_GLPI["version"];
+			//Split on first dot, convert to integer then chek 10.0.2
+			$ver = explode(".", $glpiversion);
+			//echo intval($ver[0]) . " ---------------";
+			if (intval($ver[0]) >= 10){
+				$url = '<div class="form-buttons col-md d-flex justify-content-start ms-auto ms-md-0 my-n2 py-2 pe-3 card-footer border-top-0 position-relative">'.
+		 "<div class=\"btn-group\" role=\"group\">";
+				foreach ($req2 as $row2) {
+					if ($row2['name'] !== "") {
+						$length = 200;
+						if ($enableNoVnc){
+							$url .= "<button class=\"btn btn-primary document\" onclick=\"window.open('" . $full_url . $row2['name'] 
+							. "&eeee=" . substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length / strlen($x)))) , 1, $length) 
+							. "&autoconnect=true&resize=scale&reconnect=true&show_dot=true&password=" . $vnc_pasword . "', '_blank')\" >
+							<i class=\"fa fa-laptop-medical\"></i>" . $row2['name'] . "</button>";
+						}
+						if($enableVnc){
+							$url2 .= "<button class=\"btn btn-primary document\" onclick=\"location.href='vnc://" . $row2['name'] . "'\"><i class=\"fa fa-headphones\"></i>" . $row2['name'] . "</button>";
+						}
 					}
 				}
-
+				$url .= "</div></div>";
+			} else {
+				foreach ($req2 as $row2) {
+					if ($row2['name'] !== "") {
+						$length = 200;
+						if ($enableNoVnc){
+							$url .= "<li class=\"document\" onclick=\"window.open('" . $full_url . $row2['name'] 
+							. "&eeee=" . substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length / strlen($x)))) , 1, $length) 
+							. "&autoconnect=true&resize=scale&reconnect=true&show_dot=true&password=" . $vnc_pasword . "', '_blank')\" >
+							<i class=\"fa fa-laptop-medical\"></i>" . $row2['name'] . "</li>";
+						}
+						if($enableVnc){
+							$url2 .= "<li class=\"document\" onclick=\"location.href='vnc://" . $row2['name'] . "'\"><i class=\"fa fa-headphones\"></i>" . $row2['name'] . "</li>";
+						}
+					}
+				}
 			}
 			if ($url != "") {
 				echo "<div><ul class=\"timeline_choices\"><h2>Remote support WEB: </h2>";
