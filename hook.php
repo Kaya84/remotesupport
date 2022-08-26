@@ -128,13 +128,13 @@ function plugin_remotesupport_postinit() {
 					}
 				}
 			}
-			if ($url != "") {
+			if ($enableNoVnc) {
 				echo "<div><ul class=\"timeline_choices\"><h2>Remote support WEB: </h2>";
 				echo $url;
 				echo "</ul></div>";
 
 			}
-			if ($url2 != "") {
+			if ($enableVnc) {
 				echo "<div><ul class=\"timeline_choices\"><h2>Remote support VNC: </h2>";
 				echo $url2;
 				echo "</ul></div>";
@@ -183,13 +183,13 @@ function plugin_remotesupport_preitem() {
 
 		}
 
-		if ($url != "") {
+		if ($enableNoVnc) {
 			echo "<div><ul class=\"timeline_choices\"><h2>Remote support WEB: </h2>";
 			echo $url;
 			echo "</ul></div>";
 
 		}
-		if ($url2 != "") {
+		if ($enableVnc) {
 			echo "<div><ul class=\"timeline_choices\"><h2>Remote support VNC: </h2>";
 			echo $url2;
 			echo "</ul></div>";
