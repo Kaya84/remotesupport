@@ -113,6 +113,7 @@ function plugin_remotesupport_postinit() {
 				}
 				$url .= "</div></div>";
 			} else {
+				$url = "";
 				foreach ($req2 as $row2) {
 					if ($row2['name'] !== "") {
 						$length = 200;
